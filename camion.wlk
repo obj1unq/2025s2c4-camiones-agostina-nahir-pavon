@@ -3,26 +3,22 @@ import cosas.*
 object camion {
 	const property cosas = #{}
 	
-	//cargar
-	//No se puede cargar algo ya cargado 
 	method cargar(unaCosa) {
-		if(! estaCargado(unaCosa)){
+		if (!self.estaCargado(unaCosa)){
 			cosas.add(unaCosa)
 		}
 		//error
 	}
 
-	//descargar
-	//ni descargar lo que no contiene el
 	method descargar(unaCosa) {
-		if(estaCargado(unaCosa)){
+		if (self.estaCargado(unaCosa)){
 			cosas.remove(unaCosa)
 		}
 		//error
 	}
 
 	method estaCargado(unaCosa){  
-		cosas.any({
+		return cosas.any({
 			cosa => cosa == unaCosa
 		})
 	}

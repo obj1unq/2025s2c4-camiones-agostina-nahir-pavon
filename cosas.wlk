@@ -1,0 +1,62 @@
+object knightRider {
+
+    method peso() = 500
+
+	method nivelPeligrosidad() = 10 
+}
+
+object arenaAGranel {
+    var property peso = 0
+
+    method nivelDePeligrosidad() = 1  
+}
+
+object bumblebee {
+  var property transformacion = "auto"
+
+  method peso() = 800
+
+  method esAutoORobot() = transformacion
+
+  method nivelDePeligrosidad() {
+    if (self.esAutoORobot() == "auto"){
+        return 15
+    } else {
+        return 30
+    }
+  }
+}
+
+object paqueteDeLadrillos {
+    var property cantDeLadrillos = 0
+
+    method peso() = cantDeLadrillos * 2 
+    method nivelDePeligrosidad() = 2
+}
+
+object bateriaAntiaérea {
+    var property estaConMisiles = false
+
+    //se repite codigo
+    method peso() {
+      if (estaConMisiles){
+        return 300
+      } else { 
+        return 200
+      }
+    } 
+
+    method nivelDePeligrosidad() {
+      if (estaConMisiles){
+        return 100
+      } else { 
+        return 0
+      }
+    } 
+}
+
+object residuosRadiactivos {
+    var property peso = 0
+
+    method nivelDePeligrosidad() = 200 
+}
