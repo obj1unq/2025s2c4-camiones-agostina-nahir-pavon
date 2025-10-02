@@ -1,6 +1,6 @@
 object knightRider {
 
-    method peso() = 500
+  method peso() = 500
 
 	method nivelPeligrosidad() = 10 
 }
@@ -34,12 +34,12 @@ object paqueteDeLadrillos {
     method nivelDePeligrosidad() = 2
 }
 
-object bateriaAntiaérea {
-    var property estaConMisiles = false
+object bateriaAntiaerea {
+    var property estaConMisiles = true
 
     //se repite codigo
     method peso() {
-      if (estaConMisiles){
+      if (self.estaConMisiles()){
         return 300
       } else { 
         return 200

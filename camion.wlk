@@ -4,17 +4,25 @@ object camion {
 	const property cosas = #{}
 	
 	method cargar(unaCosa) {
-		if (!self.estaCargado(unaCosa)){
-			cosas.add(unaCosa)
-		}
-		//error
+		self.validarCarga(unaCosa)
+		cosas.add(unaCosa)
+	}
+	
+	method descargar(unaCosa) {
+		self.validarDescarga(unaCosa)
+		cosas.remove(unaCosa)
 	}
 
-	method descargar(unaCosa) {
-		if (self.estaCargado(unaCosa)){
-			cosas.remove(unaCosa)
+	method validarDescarga(unaCosa) {
+	  if(! self.estaCargado(unaCosa)){
+		self.error("no existe eso en las cosas cargasod")
+	  }
+	}
+
+	method validarCarga(unaCosa) {
+		if(self.estaCargado(unaCosa)){
+			self.error("ya esta cargado")
 		}
-		//error
 	}
 
 	method estaCargado(unaCosa){  
@@ -23,9 +31,16 @@ object camion {
 		})
 	}
 
-	//el peso de cada uno de los objetos cargados es un número par.
+	method pesoPar() {
+		return cosas.all({
+			cosa => self.esDePesoPar(cosa)
+		})
+	}
+
+	method esDePesoPar(cosa) = cosa.peso() //como saco el mod en wollok?
 
 	//alguna cosa que pesa exactamente una cantidad de kilogramos dada.
+	method pesaExactamente(unPeso) = 
 
 	//Peso 
 	//la suma del peso del camión vacío (tara) y su carga. La tara del camión es de 1000 kilos.

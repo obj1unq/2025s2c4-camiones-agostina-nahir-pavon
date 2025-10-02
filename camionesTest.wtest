@@ -1,0 +1,29 @@
+import cosas.*
+import camion.*
+
+describe "cargar cosas" {
+  test "carga de bateriaAntiaerea" {
+    camion.cargar(bateriaAntiaerea)
+    assert.equals(#{bateriaAntiaerea}, camion.cosas())
+  }  
+
+  test "wl camion no vuelve a cargar algo que ya tiene" {
+    camion.cargar(bateriaAntiaerea)
+    
+    assert.throwsException({ camion.cargar(bateriaAntiaerea) })
+  }
+}
+
+describe "descarga de cosas" {
+  test "descargar residuosRadiactivos" {
+    camion.cargar(residuosRadiactivos)
+    camion.descargar(residuosRadiactivos)
+
+    assert.equals(#{}, camion.cosas())
+  }
+
+  test "el camion no puede descargar algo que no tiene" {
+    assert.throwsException({ camion.descargar(bateriaAntiaerea) })
+  }
+}
+  
