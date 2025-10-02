@@ -40,11 +40,16 @@ object camion {
 	method esDePesoPar(cosa) = cosa.peso() //como saco el mod en wollok?
 
 	//alguna cosa que pesa exactamente una cantidad de kilogramos dada.
-	method pesaExactamente(unPeso) = 
+	method pesaExactamente (cantidad) {
+ 	 cosas.find( { cosa => cosa.peso() == cantidad } )
+	}
 
 	//Peso 
 	//la suma del peso del camión vacío (tara) y su carga. La tara del camión es de 1000 kilos.
-	
+	method pesoDelCamion() = 1000 + self.cargaDelCamion()
+
+	method cargaDelCamion() = 
+
 	//exceso de peso
 	//el peso total es superior al peso máximo aceptable, que es de 2500 kilos.
 
