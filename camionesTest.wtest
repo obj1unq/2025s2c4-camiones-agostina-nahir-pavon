@@ -27,3 +27,36 @@ describe "descarga de cosas" {
   }
 }
   
+describe "es todo peso par" {
+  test "camio cargado con peso par" {
+    camion.cargar(bumblebee)
+    arenaAGranel.peso(50)
+    camion.cargar(arenaAGranel)
+
+    assert.equals(true, camion.todoPesoPar())
+  }
+
+  test "camio cargado con peso impar" {
+    arenaAGranel.peso(51)
+    camion.cargar(arenaAGranel)
+
+    assert.equals(false, camion.todoPesoPar())
+  }
+}
+
+describe "peso exacto" {
+  method initialize() {
+    camion.cargar(bumblebee)
+    arenaAGranel.peso(50)
+    camion.cargar(arenaAGranel)
+  }
+
+  test "camion cargado con peso exacto" {
+    assert.equals(true, camion.pesaExactamente(50))
+    assert.equals(true, camion.pesaExactamente(800))
+  }
+
+  test "camion no cargado con ese peso" {
+    assert.equals(false, camion.pesaExactamente(500))
+  }
+}

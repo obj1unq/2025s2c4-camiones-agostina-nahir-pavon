@@ -1,3 +1,4 @@
+import wollok.mirror.*
 import cosas.*
 
 object camion {
@@ -31,30 +32,36 @@ object camion {
 		})
 	}
 
-	method pesoPar() {
+	method todoPesoPar(){
 		return cosas.all({
 			cosa => self.esDePesoPar(cosa)
 		})
 	}
 
-	method esDePesoPar(cosa) = cosa.peso() //como saco el mod en wollok?
+	method esDePesoPar(cosa) = cosa.peso().even()
 
-	//alguna cosa que pesa exactamente una cantidad de kilogramos dada.
 	method pesaExactamente (cantidad) {
- 	 cosas.find( { cosa => cosa.peso() == cantidad } )
+ 		return cosas.any( { 
+			cosa => self.esDelMismoPeso(cosa.peso(), cantidad)
+	 	} )
 	}
 
-	//Peso 
-	//la suma del peso del camión vacío (tara) y su carga. La tara del camión es de 1000 kilos.
-	method pesoDelCamion() = 1000 + self.cargaDelCamion()
+	method esDelMismoPeso(peso1, peso2) = peso1 == peso2
 
-	method cargaDelCamion() = 
+	method pesoDelCamion() = self.taraDelCamion() + self.cargaDelCamion()
+
+	method taraDelCamion() = 1000
+
+	method cargaDelCamion() = cosas.sum({ cosa => cosa.peso() })
+
 
 	//exceso de peso
 	//el peso total es superior al peso máximo aceptable, que es de 2500 kilos.
 
 	//El de nivel
 	//Encontrar una cosa cargada cuyo nivel de peligrosidad coincida exactamente con el valor indicado.
+
+	//	OJO CON REPETIR CODIGO
 
 	//Cosas cargadas que estén en el camión que superen cierto nivel de peligrosidad.
 
@@ -64,3 +71,5 @@ object camion {
 	//si no está excedido de peso y, además, ninguno de los objetos cargados supera el nivel máximo de peligrosidad indicado.
 }
 
+//con las clases tengo que crear = Instancia, referencia y quien accede (obj ya lo hace)
+//objeto sin referencia muere
