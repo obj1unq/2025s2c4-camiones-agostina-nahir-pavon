@@ -54,20 +54,30 @@ object camion {
 
 	method cargaDelCamion() = cosas.sum({ cosa => cosa.peso() })
 
+	method estaExedidoDePeso() = self.pesoDelCamion() > self.pesoAceptableDeCamion()
 
-	//exceso de peso
-	//el peso total es superior al peso máximo aceptable, que es de 2500 kilos.
+	method pesoAceptableDeCamion() = 2500
 
-	//El de nivel
-	//Encontrar una cosa cargada cuyo nivel de peligrosidad coincida exactamente con el valor indicado.
+	/*
+	method encontrarCosaSegun(condicion) {
+		return cosas.find ({
+			cosa => condicion.applyTo(cosa.nivelDePeligrosidad())
+		})
+	}
 
-	//	OJO CON REPETIR CODIGO
+	method encontrarCosaConPeligrosidad(valor) {
+		return self.encontrarCosaSegun({ nivelDePeligrosidad == valor })
+	}
 
-	//Cosas cargadas que estén en el camión que superen cierto nivel de peligrosidad.
+	method cosaQueSuperePeligrosidad(nivelASuperar) {
+		return self.encontrarCosaSegun({ nivelDePeligrosidad > nivelASuperar })
+	}
+	*/
 
 	//Cosas cargadas que estén en el camión que sean más peligrosas que otra cosa indicada.
 
-	//Puede circular en ruta
+	method puedeCircularEnRuta() = 
+		self.estaExedidoDePeso() && 
 	//si no está excedido de peso y, además, ninguno de los objetos cargados supera el nivel máximo de peligrosidad indicado.
 }
 

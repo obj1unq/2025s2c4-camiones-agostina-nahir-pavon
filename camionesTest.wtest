@@ -60,3 +60,69 @@ describe "peso exacto" {
     assert.equals(false, camion.pesaExactamente(500))
   }
 }
+
+describe "peso y exceso de peso" {
+  test "Peso no excedido de 2400" {
+    camion.cargar(bumblebee)
+    paqueteDeLadrillos.cantDeLadrillos(300)
+    camion.cargar(paqueteDeLadrillos)
+
+    assert.equals(2400, camion.pesoDelCamion())
+    assert.equals(false, camion.estaExedidoDePeso())
+  }
+
+  test "Peso excedido de 2600" {
+    camion.cargar(bumblebee)
+    paqueteDeLadrillos.cantDeLadrillos(400)
+    camion.cargar(paqueteDeLadrillos)
+
+    assert.equals(2600, camion.pesoDelCamion())
+    assert.equals(true, camion.estaExedidoDePeso())
+  }
+}
+
+describe "el del nivel" {
+  method initialize() {
+    bumblebee.transformacion("auto")
+    camion.cargar(bumblebee)
+    bateriaAntiaerea.estaConMisiles(false)
+    camion.cargar(bateriaAntiaerea)
+    camion.cargar(residuosRadiactivos)
+  }
+  test "algo de nivel 0" {
+    assert.equals(bateriaAntiaerea, camion.encontrarCosaConPeligrosidad(0))
+  }
+
+  test "algo de nivel 15" {
+    assert.equals(bumblebee, camion.encontrarCosaConPeligrosidad(15))
+  }
+
+  test "algo de nivel 200" {
+    assert.equals(residuosRadiactivos, camion.encontrarCosaConPeligrosidad(200))
+  }
+
+  test "rompe" {
+    assert.throwsException({ camion.encontrarCosaConPeligrosidad(30) })
+  }
+
+  test "bumblebee en modo robot" {
+    bumblebee.transformacion("robot")
+    assert.equals(bumblebee, camion.encontrarCosaConPeligrosidad(30))
+  }
+
+  test "bateria con misiles" {
+    bateriaAntiaerea.estaConMisiles(true)
+    assert.equals(bateriaAntiaerea, camion.encontrarCosaConPeligrosidad(100))
+  }
+
+}
+
+describe "cosas peligrosas" {
+  method initialize() {
+    camion.cargar(knightRider)
+    camion.cargar(bateriaAntiaerea)
+  }
+  test "las cosas más peligrosas de 15" {
+    assert.equals(camion.cosaQueSuperePeligrosidad(15), bateriaAntiaerea)
+  }
+}

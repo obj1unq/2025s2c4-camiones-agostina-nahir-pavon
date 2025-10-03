@@ -2,7 +2,7 @@ object knightRider {
 
   method peso() = 500
 
-	method nivelPeligrosidad() = 10 
+	method nivelDePeligrosidad() = 10 
 }
 
 object arenaAGranel {
