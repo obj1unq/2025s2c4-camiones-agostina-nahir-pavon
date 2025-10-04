@@ -58,28 +58,27 @@ object camion {
 
 	method pesoAceptableDeCamion() = 2500
 
-	/*
-	method encontrarCosaSegun(condicion) {
-		return cosas.find ({
-			cosa => condicion.applyTo(cosa.nivelDePeligrosidad())
+	method encontrarCosaConPeligrosidad(valor) {
+		return cosas.find( {
+			cosa => cosa.nivelDePeligrosidad() == valor
 		})
 	}
 
-	method encontrarCosaConPeligrosidad(valor) {
-		return self.encontrarCosaSegun({ nivelDePeligrosidad == valor })
+	method cosasQueSuperePeligrosidad(nivelDePeligrosidad) {
+	  return cosas.filter( {
+		cosa => cosa.nivelDePeligrosidad() > nivelDePeligrosidad
+		})
 	}
 
-	method cosaQueSuperePeligrosidad(nivelASuperar) {
-		return self.encontrarCosaSegun({ nivelDePeligrosidad > nivelASuperar })
+	method cosasConMasNivelQue(cosa){
+		return self.cosasQueSuperePeligrosidad(cosa.nivelDePeligrosidad())
 	}
-	*/
-
-	//Cosas cargadas que estén en el camión que sean más peligrosas que otra cosa indicada.
-
-	method puedeCircularEnRuta() = 
-		self.estaExedidoDePeso() && 
-	//si no está excedido de peso y, además, ninguno de los objetos cargados supera el nivel máximo de peligrosidad indicado.
+	
+	//method puedeCircularEnRuta() = self.estaExedidoDePeso() && 
 }
+	//si no está excedido de peso y, además, ninguno de los objetos cargados supera el nivel máximo de peligrosidad indicado.
+
 
 //con las clases tengo que crear = Instancia, referencia y quien accede (obj ya lo hace)
 //objeto sin referencia muere
+

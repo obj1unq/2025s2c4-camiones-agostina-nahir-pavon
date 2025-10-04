@@ -120,9 +120,25 @@ describe "el del nivel" {
 describe "cosas peligrosas" {
   method initialize() {
     camion.cargar(knightRider)
+    bateriaAntiaerea.estaConMisiles(true)
     camion.cargar(bateriaAntiaerea)
   }
   test "las cosas más peligrosas de 15" {
-    assert.equals(camion.cosaQueSuperePeligrosidad(15), bateriaAntiaerea)
+    assert.equals(#{bateriaAntiaerea}, camion.cosasQueSuperePeligrosidad(15))
   }
+  test "las cosas mas peligrosas que bumblebee" {
+    assert.equals(#{bateriaAntiaerea}, camion.cosasConMasNivelQue(bumblebee))
+  }
+  test "las cosas mas peligrosas que paquete de ladrillos" {
+    assert.equals(#{knightRider, bateriaAntiaerea}, camion.cosasConMasNivelQue(paqueteDeLadrillos))
+  }
+  test "no hay cosas mas peligrosas que el paquete de ladrillos" {
+    assert.equals(#{}, camion.cosasQueSuperePeligrosidad(200))
+  }
+
+  test "no hay nada mas peligroso que residuos radiactivos" {
+    assert.equals(#{}, camion.cosasConMasNivelQue(residuosRadiactivos))
+  }
+
+  
 }
