@@ -3,12 +3,20 @@ object knightRider {
   method peso() = 500
 
 	method nivelDePeligrosidad() = 10 
+
+  method bulto() = 1 
+
+  method accidentar(){}
 }
 
 object arenaAGranel {
     var property peso = 0
 
-    method nivelDePeligrosidad() = 1  
+    method nivelDePeligrosidad() = 1
+
+    method bulto() = 1   
+
+    method accidentar(){peso += 20}
 }
 
 object bumblebee {
@@ -25,6 +33,16 @@ object bumblebee {
         return 30
     }
   }
+
+  method bulto() = 2
+
+	method accidentar() {
+	  if (transformacion == "auto"){
+      "robot"
+	  } else {
+		 "auto"
+	  }
+	}
 }
 
 object paqueteDeLadrillos {
@@ -32,6 +50,21 @@ object paqueteDeLadrillos {
 
     method peso() = cantDeLadrillos * 2 
     method nivelDePeligrosidad() = 2
+
+    method bulto(){
+		  if (self.cantDeLadrillosMenorIgualA(100)) {
+        return 1 
+      } else if (self.cantDeLadrillosMayorIgualA(101) && self.cantDeLadrillosMenorIgualA(300)){ 
+        return 2 
+      } else { 
+        return 3 }
+	}
+
+  method cantDeLadrillosMayorIgualA(cantidad) = cantDeLadrillos >= cantidad
+  method cantDeLadrillosMenorIgualA(cantidad) = cantDeLadrillos <= cantidad
+
+	method accidentar(){
+    cantDeLadrillos = (cantDeLadrillos - 12).max(0)}
 }
 
 object bateriaAntiaerea {
@@ -53,12 +86,30 @@ object bateriaAntiaerea {
         return 0
       }
     } 
+
+    method bulto(){
+      if (estaConMisiles){
+        return 2
+      } else {
+        return 1
+      }
+    }
+	
+    method accidentar(){
+      estaConMisiles = true
+    }
 }
 
 object residuosRadiactivos {
     var property peso = 0
 
     method nivelDePeligrosidad() = 200 
+
+    method bulto() = 1
+
+	  method accidentar(){
+      peso += 15
+    }
 }
 
 object contenedorPortuario {
@@ -86,6 +137,11 @@ object contenedorPortuario {
   method cosaConMasNivelDePeligrosidad() {
 	  return cosas.max({cosa => cosa.nivelDePeligrosidad()})
 	}
+
+  method bulto() = cosas.sum({cosa => cosa.bulto()}) + 1
+	
+  method accidentar(){
+    cosas.forEach({cosa => cosa.accidentar()})}
 }
 
 object embalajeDeSeguridad {
@@ -94,4 +150,10 @@ object embalajeDeSeguridad {
   method peso() = coberturaA.peso()
 
   method nivelDePeligrosidad() = coberturaA.nivelDePeligrosidad() / 2
+
+  method bulto() = 2
+
+	method accidentar(){
+    coberturaA.accidentar()
+  }
 }

@@ -1,5 +1,6 @@
 import wollok.mirror.*
 import cosas.*
+import transporte.*
 
 object camion {
 	const property cosas = #{}
@@ -91,9 +92,26 @@ object camion {
 	}
 
 	method pesoDelasCosas() {
-		return cosas.foreach( {
+		return cosas.map( {
 			cosa => cosa.peso()
 		})
+	}
+
+	method totaDeBultos() = cosas.sum({cosa => cosa.bulto()})
+
+	method sufrirAccidente() {
+		return cosas.forEach({cosa => cosa.accidentar()})
+	}
+
+	method descargarCamion(destino){
+		destino.pasarAlAlmacén(cosas)
+		cosas.clear()
+	}
+
+	method transportarDesdeHasta(destino, camino) {
+		if (camino.soportaViaje(self)){
+			self.descargarCamion(destino)
+		}
 	}
 }
 

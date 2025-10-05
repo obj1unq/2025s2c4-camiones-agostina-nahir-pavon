@@ -1,5 +1,6 @@
 import cosas.*
 import camion.*
+import transporte.*
 
 describe "cargar cosas" {
   test "carga de bateriaAntiaerea" {
@@ -219,4 +220,61 @@ test "pesos" {
   camion.cargar(paqueteDeLadrillos)
 
   assert.equals([800,600], camion.pesoDelasCosas())
+}
+
+describe "total bultos" {
+  test "caso 1" {
+    camion.cargar(contenedorPortuario)
+    contenedorPortuario.cargar(knightRider)
+    contenedorPortuario.cargar(bumblebee)
+    camion.cargar(embalajeDeSeguridad)
+    embalajeDeSeguridad.coberturaA (residuosRadiactivos)
+    camion.cargar(arenaAGranel)
+    camion.cargar(paqueteDeLadrillos)
+    paqueteDeLadrillos.cantDeLadrillos(50)
+    camion.cargar(bateriaAntiaerea)
+    bateriaAntiaerea.estaConMisiles(false)
+
+    assert.equals(9, camion.totaDeBultos())
+  }
+}
+
+describe "accidente" {
+  test "caso 1" {
+    camion.cargar(knightRider)
+    camion.cargar(bumblebee)
+    bumblebee.transformacion("auto")
+    residuosRadiactivos.peso(30)
+    embalajeDeSeguridad.coberturaA(residuosRadiactivos)
+    camion.cargar(embalajeDeSeguridad)
+    camion.cargar(arenaAGranel)
+    arenaAGranel.peso(50)
+    camion.cargar(paqueteDeLadrillos)
+    paqueteDeLadrillos.cantDeLadrillos(100)
+    camion.cargar(bateriaAntiaerea)
+    bateriaAntiaerea.estaConMisiles(true)
+    
+    camion.sufrirAccidente()
+    
+    assert.equals(45, embalajeDeSeguridad.peso())
+    assert.equals(88, paqueteDeLadrillos.cantDeLadrillos())
+    assert.equals(70, arenaAGranel.peso())
+  }
+}
+
+describe "transporte" {
+
+  method initialize(){
+    almacen.pasarAlAlmacén(#{knightRider, residuosRadiactivos})
+    camion.cargar(bumblebee)
+    camion.cargar(arenaAGranel)
+    bumblebee.transformacion("auto")
+    arenaAGranel.peso(50)
+  }
+
+  test "caso 1" {
+    camion.transportarDesdeHasta(almacen, rutaNueve)
+    assert.equals(#{knightRider, residuosRadiactivos, bumblebee, arenaAGranel}, almacen.cosas())
+    assert.equals(#{}, camion.cosas())
+  }
 }
