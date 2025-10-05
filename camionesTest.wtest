@@ -139,6 +139,84 @@ describe "cosas peligrosas" {
   test "no hay nada mas peligroso que residuos radiactivos" {
     assert.equals(#{}, camion.cosasConMasNivelQue(residuosRadiactivos))
   }
+}
 
-  
+describe "puede circular en la ruta" {
+  test "puede circular" {
+    camion.cargar(bumblebee)
+    paqueteDeLadrillos.cantDeLadrillos(300)
+    camion.cargar(paqueteDeLadrillos)
+    assert.equals(true, camion.puedeCircularEnLaRuta(20))
+  }
+
+  test "no puede circular " {
+    camion.cargar(bumblebee)
+    paqueteDeLadrillos.cantDeLadrillos(400)
+    camion.cargar(paqueteDeLadrillos)
+    assert.equals(false, camion.puedeCircularEnLaRuta(20))
+  }
+}
+
+describe "mas cosas" {
+  test "contenedor portuario" {
+    assert.equals(100, contenedorPortuario.peso())
+    assert.equals(0, contenedorPortuario.nivelDePeligrosidad())
+  }
+  test "contenedor portuario tiene a Knight Rider y arena a granel" {
+    contenedorPortuario.cargar(knightRider)
+    arenaAGranel.peso(50)
+    contenedorPortuario.cargar(arenaAGranel)
+    assert.equals(650, contenedorPortuario.peso())
+    assert.equals(10, contenedorPortuario.nivelDePeligrosidad())
+  }
+  test "embalaje de seguridad envuelve a Knight Rider" {
+    embalajeDeSeguridad.coberturaA(knightRider)
+    assert.equals(500, embalajeDeSeguridad.peso())
+    assert.equals(5, embalajeDeSeguridad.nivelDePeligrosidad())
+  }
+  test "embalaje de seguridad envuelve a Bumblebee" {
+    bumblebee.transformacion("auto")
+    embalajeDeSeguridad.coberturaA(bumblebee)
+    assert.equals(800, embalajeDeSeguridad.peso())
+    assert.equals(7.5, embalajeDeSeguridad.nivelDePeligrosidad())
+  }
+}
+
+describe "peso entre dos valores" {
+  method initialize() {
+    camion.cargar(bumblebee)
+    paqueteDeLadrillos.cantDeLadrillos(300)
+    camion.cargar(paqueteDeLadrillos)
+  }
+  test "Tiene algo que pesa entre 5 y 700" {
+    assert.equals(true, camion.tieneAlgoEntre(5,700))
+  }
+  test "Tiene algo que pesa entre 5 y 1000" {
+    assert.equals(true, camion.tieneAlgoEntre(5,1000))
+  }
+  test "No tiene algo que pese entre 900 y 1000" {
+    assert.equals(false, camion.tieneAlgoEntre(900,1000))
+  }
+}
+
+describe "cosa mas pesada" {
+
+  test "la cosa mas pesada es bumblebee" {
+    camion.cargar(bumblebee)
+    paqueteDeLadrillos.cantDeLadrillos(300)
+    camion.cargar(paqueteDeLadrillos)
+    assert.equals(bumblebee, camion.cosaMasPesada())
+  }
+
+  test "no se puede calcular la cosa más pesada" {
+    assert.throwsException({ camion.cosaMasPesada() })
+  }
+}
+
+test "pesos" {
+  camion.cargar(bumblebee)
+  paqueteDeLadrillos.cantDeLadrillos(300)
+  camion.cargar(paqueteDeLadrillos)
+
+  assert.equals([800,600], camion.pesoDelasCosas())
 }

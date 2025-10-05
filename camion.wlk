@@ -70,13 +70,32 @@ object camion {
 		})
 	}
 
+	method puedeCircularEnLaRuta(nivelDePeligrosidad) = !self.estaExedidoDePeso() && self.ningunSuperaLaPeligrosidad(nivelDePeligrosidad)
+
+	method ningunSuperaLaPeligrosidad(nivelDePeligrosidad) = self.cosasQueSuperePeligrosidad(nivelDePeligrosidad).size() == 0
+
 	method cosasConMasNivelQue(cosa){
 		return self.cosasQueSuperePeligrosidad(cosa.nivelDePeligrosidad())
 	}
 	
-	//method puedeCircularEnRuta() = self.estaExedidoDePeso() && 
+	method tieneAlgoEntre(min, max) {
+		return cosas.any( {
+			cosa => cosa.peso() > min && cosa.peso() < max
+		})
+	}
+
+	method cosaMasPesada() {
+		return cosas.max( {
+			cosa => cosa.peso()
+		})
+	}
+
+	method pesoDelasCosas() {
+		return cosas.foreach( {
+			cosa => cosa.peso()
+		})
+	}
 }
-	//si no está excedido de peso y, además, ninguno de los objetos cargados supera el nivel máximo de peligrosidad indicado.
 
 
 //con las clases tengo que crear = Instancia, referencia y quien accede (obj ya lo hace)

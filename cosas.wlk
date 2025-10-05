@@ -64,7 +64,7 @@ object residuosRadiactivos {
 object contenedorPortuario {
   const cosas = #{}
 
-  method agregarCosa(unaCosa){
+  method cargar(unaCosa){
 		cosas.add(unaCosa)
 	}
 
@@ -74,5 +74,24 @@ object contenedorPortuario {
 
   method sumasDeLasCosas() = cosas.sum({ cosa => cosa.peso() }) 
 
-  method nivelDePeligrosidad() = cosas.findOrDefault({ cosa => cosa.nivelDePeligrosidad().max() }, 0)
+  method nivelDePeligrosidad() {
+	  if (!cosas.isEmpty()) {
+      return self.cosaConMasNivelDePeligrosidad().nivelDePeligrosidad()
+    }
+     else {
+      return 0
+     }
+	}
+
+  method cosaConMasNivelDePeligrosidad() {
+	  return cosas.max({cosa => cosa.nivelDePeligrosidad()})
+	}
+}
+
+object embalajeDeSeguridad {
+  var property coberturaA = null
+
+  method peso() = coberturaA.peso()
+
+  method nivelDePeligrosidad() = coberturaA.nivelDePeligrosidad() / 2
 }
